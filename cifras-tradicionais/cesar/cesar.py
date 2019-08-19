@@ -21,6 +21,9 @@ def main():
 
     for i in range(1, len(CHARS)):
         print()
+        print("#" + str(i))
+        print()
+        print()
         for line in msg:
             print(''.join(transform(i, line)))
         print()
