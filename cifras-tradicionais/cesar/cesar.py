@@ -25,7 +25,7 @@ def main():
         print()
         print()
         for line in msg:
-            print(''.join(transform(i, line)))
+            print(''.join(transform(i, line)), end='')
         print()
         print('############################################################')
 
