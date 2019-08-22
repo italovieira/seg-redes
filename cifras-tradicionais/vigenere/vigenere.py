@@ -14,8 +14,15 @@ def rotate(n, c):
         return c
 
 
+def index(i, key):
+    try:
+        return CHARS.index(key[i % len(key)])
+    except ValueError:
+        return 0
+
+
 def transform(key, msg):
-    return [rotate(CHARS.index(key[i % len(key)]), c) for i, c in enumerate(msg)]
+    return [rotate(index(i, key), c) for i, c in enumerate(msg)]
 
 
 def main():
