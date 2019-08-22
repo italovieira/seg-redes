@@ -26,15 +26,14 @@ def main():
     file.close()
 
 
-    print(msg)
     print('############################################################')
-    print(''.join(transform('abab', msg)))
-   # for key in data:
-   #     print("key: " + key)
-   #     print()
-   #     print(''.join(transform(key, msg)))
-   #     print()
-   #     print('############################################################')
+    for key in data:
+        print("key: " + key)
+        print()
+        for line in msg:
+            print(''.join(transform(key, line)))
+        print()
+        print('############################################################')
 
 
 if __name__ == '__main__':
