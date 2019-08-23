@@ -1,6 +1,6 @@
 import sys
 
-CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ?,'
+CHARS = 'abcdefghijklmnopqrstuvwxyz'
 
 # data: possible keys
 FILENAME = sys.argv[1]
@@ -9,7 +9,7 @@ FILENAME = sys.argv[1]
 def rotate(n, c):
     try:
         i = CHARS.index(c)
-        return CHARS[(i + n) % len(CHARS)]
+        return CHARS[(i - n) % len(CHARS)]
     except ValueError:
         return c
 
