@@ -5,21 +5,26 @@ def shift(n):
 def get_bit(i, n):
     return n >> (10 - i) & 1
 
-def transform(p, n):
-    list_p = [(get_bit(i, n) << (len(p) - index - 1)) for index, i in enumerate(p)]
+def permute(p, n):
+    len_p = len(p)
+    list_p = [(get_bit(i, n) << (len_p - index - 1)) for index, i in enumerate(p)]
     return sum(list_p)
 
 def p10(n):
     P10 = [3, 5, 2, 7, 4, 10, 1, 9, 8, 6]
-    return transform(P10, n)
+    return permute(P10, n)
 
 def p8(n):
     P8 = [6, 3, 7, 4, 8, 5, 10, 9]
-    return transform(P8, n)
+    return permute(P8, n)
 
 def split10(n):
     return (n >> 5, n & 0b11111)
 
+
+def ip(n):
+    IP = [2, 6, 3, 1, 4, 8, 5, 7]
+    return permute(IP, n)
 
 def split8(n):
     return (n >> 4, n & 0b1111)
@@ -41,19 +46,21 @@ def gen_keys(key):
 
 
 
-    shifted3_a = shift(shift1(shifted1_a))
-    shifted3_b = shift(shift1(shifted1_b))
+    shifted3_a = shift(shift(shifted1_a))
+    shifted3_b = shift(shift(shifted1_b))
 
     k2 = p8(join(shifted3_a, shifted3_b))
 
-    print(k1, k2)
+    print(bin(k1), bin(k2))
     return (k1, k2)
 
 
 def ep(key):
     EP = [4, 1, 2, 3, 2, 3, 4, 1]
-    return transform(EP, key)
+    return permute(EP, key)
 
-def encrypt(text):
-    (_, right) = split8(p8(text))
+def encrypt(plain_text):
+    print(bin(ip(plain_text)))
+    (_, right) = split8(ip(plain_text))
+    print(bin(right))
     return ep(right)
