@@ -42,13 +42,38 @@ def test_ep():
 
 
 def test_s0():
-    assert s0(0b1110) == 0b00
+    assert s0(0b1111) == 0b10
 
 
 def test_s1():
-    assert s1(0b0101) == 0b11
+    assert s1(0b1110) == 0b00
 
 
 def test_p4():
     assert p4(0b0011) == 0b0110
 
+
+def test_F():
+    assert F(0b0010, 0b11101001) == 0b0001
+
+
+def test_fk():
+    assert fk(0b10100111)(0b0010, 0b0011) == (0b0001, 0b0011)
+
+
+def test_inverse_ip():
+    assert inverse_ip(0b00010011) == 0b10001010
+
+
+def test_k1():
+    (k1, _) = gen_keys(0b1100011110)
+    assert k1 == 0b11101001
+
+
+def test_k2():
+    (_, k2) = gen_keys(0b1100011110)
+    assert k2 == 0b10100111
+
+
+def test_encrypt():
+    assert encrypt(0b1100011110)(0b00101000) == 0b10001010

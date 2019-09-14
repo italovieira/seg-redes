@@ -136,29 +136,28 @@ def p4(n):
     return permute(P4, n, 4)
 
 
-def encrypt(plain_text):
-    def step(block, key, table):
-        print(bin(ip(plain_text)))
+def F(p, key):
+    xor = ep(p) ^ key
+    (a, b) = split8(xor)
+
+    step7 = join4(s0(a), s1(b))
+
+    return p4(step7)
+
+
+def fk(k):
+    return lambda left, right : (left ^ F(right, k), right)
+
+
+def encrypt(key):
+    def steps(plain_text):
+        (k1, k2) = gen_keys(key)
         (left, right) = split8(ip(plain_text))
-        print(bin(right))
-        print(bin(ep(right)))
 
-        xor = ep(right) ^ key
-        print(bin(xor))
+        (fk1_left, fk1_right) = fk(k1)(left, right)
 
-        (a1, b1) = split8(xor)
+        (fk2_left, fk2_right) = fk(k2)(fk1_right, fk1_left)
 
-        step7 = join4(s0(a1), s1(b1))
+        return inverse_ip(join8(fk2_left, fk2_right))
 
-        step8 = p4(step7)
-
-        step9 = step8 ^ left
-
-        step10 = join8(step9, right)
-
-        (a2, b2) = split8(step10)
-        return join8(b2, a2)
-
-####################################################################################################
-    (k1, k2) = gen_keys(0b1010000010)
-    return step(step(plain_text, k1, ip), k2, inverse_ip)
+    return steps
