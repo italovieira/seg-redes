@@ -92,10 +92,10 @@ def gen_keys(key):
 
 
 def s_box(box, n):
-    first_bit = get_bit(0, n, 4)
-    second_bit = get_bit(1, n, 4)
-    third_bit = get_bit(2, n, 4)
-    last_bit = get_bit(3, n, 4)
+    first_bit = get_bit(1, n, 4)
+    second_bit = get_bit(2, n, 4)
+    third_bit = get_bit(3, n, 4)
+    last_bit = get_bit(4, n, 4)
 
     row = join2(first_bit, last_bit)
     col = join2(second_bit, third_bit)
@@ -105,7 +105,7 @@ def s_box(box, n):
     print("last ", last_bit)
     print("row ", row, " | col ", col)
 
-    return box[row - 1][col - 1]
+    return box[row][col]
 
 
 def s0(n):
@@ -129,6 +129,11 @@ def s1(n):
 def ep(key):
     EP = [4, 1, 2, 3, 2, 3, 4, 1]
     return permute(EP, key, 4)
+
+
+def p4(n):
+    P4 = [2, 4, 3, 1]
+    return permute(P4, n, 4)
 
 
 def encrypt(plain_text):
