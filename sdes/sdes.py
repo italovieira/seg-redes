@@ -53,8 +53,24 @@ def inverse_ip(n):
     return permute(INVERSE_IP, n)
 
 
-def join(n1, n2):
-    return (n1 << 5) + n2
+def join(half_length, n1, n2):
+    return (n1 << half_length) + n2
+
+
+def join2(n1, n2):
+    return join(1, n1, n2)
+
+
+def join4(n1, n2):
+    return join(2, n1, n2)
+
+
+def join8(n1, n2):
+    return join(4, n1, n2)
+
+
+def join10(n1, n2):
+    return join(5, n1, n2)
 
 
 def gen_keys(key):
@@ -64,14 +80,12 @@ def gen_keys(key):
     shifted1_a = shift(a)
     shifted1_b = shift(b)
     #print(bin(shifted1_a), bin(shifted1_b))
-    rejoin = join(shifted1_a, shifted1_b)
-    #print(bin(rejoin))
-    k1 = p8(join(shifted1_a, shifted1_b))
+    k1 = p8(join10(shifted1_a, shifted1_b))
 
     shifted3_a = shift(shift(shifted1_a))
     shifted3_b = shift(shift(shifted1_b))
 
-    k2 = p8(join(shifted3_a, shifted3_b))
+    k2 = p8(join10(shifted3_a, shifted3_b))
 
     #print(bin(k1), bin(k2))
     return (k1, k2)
@@ -83,8 +97,8 @@ def s_box(box, n):
     third_bit = get_bit(2, n, 4)
     last_bit = get_bit(3, n, 4)
 
-    row = join(first_bit, last_bit)
-    col = join(second_bit, third_bit)
+    row = join2(first_bit, last_bit)
+    col = join2(second_bit, third_bit)
     print("first ", first_bit)
     print("second ", second_bit)
     print("third ", third_bit)
@@ -129,16 +143,16 @@ def encrypt(plain_text):
 
         (a1, b1) = split8(xor)
 
-        step7 = join(s0(a1), s1(b1))
+        step7 = join4(s0(a1), s1(b1))
 
         step8 = p4(step7)
 
         step9 = step8 ^ left
 
-        step10 = join(step9, right)
+        step10 = join8(step9, right)
 
         (a2, b2) = split8(step10)
-        return join(b2, a2)
+        return join8(b2, a2)
 
 ####################################################################################################
     (k1, k2) = gen_keys(0b1010000010)

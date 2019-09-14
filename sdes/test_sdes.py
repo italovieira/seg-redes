@@ -13,8 +13,16 @@ def test_shift():
     assert shift(0b10000) == 0b00001
 
 
-def test_join():
-    assert join(0b00001, 0b11000) == 0b0000111000
+def test_join4():
+    assert join4(0b10, 0b11) == 0b1011
+
+
+def test_join8():
+    assert join8(0b1010, 0b1001) == 0b10101001
+
+
+def test_join10():
+    assert join10(0b00001, 0b11000) == 0b0000111000
 
 
 def test_p8():
@@ -39,14 +47,6 @@ def test_s0():
 
 def test_s1():
     assert s1(0b0101) == 0b11
-
-
-def test_join_half_length4():
-    assert join(0b10, 0b11) == 0b1011
-
-
-def test_join_half_length8():
-    assert join(0b1010, 0b1001) == 0b10101001
 
 
 def test_p4():
