@@ -161,3 +161,18 @@ def encrypt(key):
         return inverse_ip(join8(fk2_left, fk2_right))
 
     return steps
+
+
+def decrypt(key):
+    def steps(cipher_text):
+        (k1, k2) = gen_keys(key)
+
+        (left, right) = split8(ip(cipher_text))
+
+        (fk2_left, fk2_right) = fk(k2)(left, right)
+
+        (fk1_left, fk1_right) = fk(k1)(fk2_right, fk2_left)
+
+        return inverse_ip(join8(fk1_left, fk1_right))
+
+    return steps

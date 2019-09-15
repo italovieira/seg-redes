@@ -77,3 +77,7 @@ def test_k2():
 
 def test_encrypt():
     assert encrypt(0b1100011110)(0b00101000) == 0b10001010
+
+
+def test_decrypt():
+    assert decrypt(0b1100011110)(0b10001010) == 0b00101000
