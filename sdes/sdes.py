@@ -53,24 +53,14 @@ def inverse_ip(n):
     return permute(INVERSE_IP, n)
 
 
-def join(half_length, n1, n2):
-    return (n1 << half_length) + n2
+def join(half_length):
+    return lambda n1, n2 : (n1 << half_length) + n2
 
 
-def join2(n1, n2):
-    return join(1, n1, n2)
-
-
-def join4(n1, n2):
-    return join(2, n1, n2)
-
-
-def join8(n1, n2):
-    return join(4, n1, n2)
-
-
-def join10(n1, n2):
-    return join(5, n1, n2)
+join2 = join(1)
+join4 = join(2)
+join8 = join(4)
+join10 = join(5)
 
 
 def gen_keys(key):
