@@ -1,4 +1,4 @@
-BLOCK_LENGTH = 256
+BLOCK_LENGTH = 8
 
 def swap(S):
     def step(i, j):
@@ -40,14 +40,20 @@ def gen_stream(S, plain_text):
     return cypher_text
 
 
-def encrypt(key):
-    S = permutation(*initialize(key))
-
-    def steps(plain_text):
-        return gen_stream(S, plain_text)
-
-    return steps
 
 
-def decrypt(key):
-    return encrypt(key)
+class Rc4:
+
+    def __init__(self, key):
+        self.S = permutation(*initialize(key))
+
+
+    def change_key(self, key):
+        self.__init__(key)
+
+
+    def encrypt(self, plain_text):
+        return gen_stream(self.S, plain_text)
+
+
+    decrypt = encrypt
