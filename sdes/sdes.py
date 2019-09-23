@@ -64,12 +64,9 @@ join10 = join(5)
 
 
 def gen_keys(key):
-    #print(bin(p10(key)))
     (a, b) = split10(p10(key))
-    #print(bin(a), bin(b))
     shifted1_a = shift(a)
     shifted1_b = shift(b)
-    #print(bin(shifted1_a), bin(shifted1_b))
     k1 = p8(join10(shifted1_a, shifted1_b))
 
     shifted3_a = shift(shift(shifted1_a))
@@ -77,7 +74,6 @@ def gen_keys(key):
 
     k2 = p8(join10(shifted3_a, shifted3_b))
 
-    #print(bin(k1), bin(k2))
     return (k1, k2)
 
 
@@ -89,11 +85,6 @@ def s_box(box, n):
 
     row = join2(first_bit, last_bit)
     col = join2(second_bit, third_bit)
-    print("first ", first_bit)
-    print("second ", second_bit)
-    print("third ", third_bit)
-    print("last ", last_bit)
-    print("row ", row, " | col ", col)
 
     return box[row][col]
 
