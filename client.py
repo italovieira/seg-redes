@@ -21,7 +21,6 @@ def set_crypt(crypt_str, key):
 
     elif crypt_str.lower() == 'rc4':
         CRYPT = Rc4(bytes(key, 'utf8'))
-        print('###test: key:', key, 'bytes', bytes(key, 'utf8'))
         print('# Now using RC4 #')
 
     elif crypt_str.lower() == 'none':
@@ -39,6 +38,7 @@ def receive():
         try:
             # Receiving messages
             recv_msg = CRYPT.decrypt(client_socket.recv(BUFSIZ)).decode('utf8')
+            print()
             print(recv_msg)
 
         except UnicodeDecodeError:  # Possibly client has left the chat.
@@ -50,6 +50,10 @@ def receive():
 def send():
     global CRYPT
 
+    name = input('Enter your name: ')
+    print('Enter /quit to exit.')
+
+
     while True:
         try:
             # Sending messages
@@ -58,7 +62,7 @@ def send():
 
             '''Handles sending of messages.'''
             if not msg.startswith('/'):
-                client_socket.send(CRYPT.encrypt(bytes(msg, 'utf8')))
+                client_socket.send(CRYPT.encrypt(bytes(name + ' > ' + msg, 'utf8')))
 
             if msg.startswith('/crypt '):
                 try:
@@ -92,9 +96,6 @@ print('Connected to ... chat...\n')
 # Enter name
 #recv_msg = client_socket.recv(BUFSIZ).decode('utf8')
 #print(recv_msg)
-
-name = input('Enter your name: ')
-print('Enter /quit to exit.')
 
 Thread(target=send).start()
 Thread(target=receive).start()
