@@ -41,7 +41,7 @@ def gen_stream(S):
 class Rc4:
 
     def __init__(self, key : bytes):
-        self.S = permutation(*initialize(list(key)))
+        self.S = permutation(*initialize(key))
 
 
     def encrypt(self, plain_text : bytes) -> bytes:
