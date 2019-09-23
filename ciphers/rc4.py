@@ -1,4 +1,4 @@
-BLOCK_LENGTH = 8
+BLOCK_LENGTH = 256
 
 def swap(S):
     def step(i, j):
@@ -41,17 +41,10 @@ def gen_stream(S, plain_text):
 
 
 
-from .crypt_base import CryptBase
-
-
-class Rc4(CryptBase):
+class Rc4:
 
     def __init__(self, key : bytes):
         self.S = permutation(*initialize(list(key)))
-
-
-    def change_key(self, key):
-        self.__init__(key)
 
 
     def encrypt(self, plain_text : bytes) -> bytes:

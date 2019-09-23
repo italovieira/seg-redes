@@ -131,10 +131,7 @@ def fk(k):
 
 
 
-from .crypt_base import CryptBase
-
-
-class Sdes(CryptBase):
+class Sdes:
 
     def __init__(self, key : int):
         self.key = key

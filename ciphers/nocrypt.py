@@ -1,7 +1,4 @@
-from .crypt_base import CryptBase
-
-
-class Nocrypt(CryptBase):
+class Nocrypt:
 
     def encrypt(self, x):
         return x
