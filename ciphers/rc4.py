@@ -34,7 +34,7 @@ def gen_stream(S, plain_text):
         S = swap(S)(i, j)
         t = (S[i] + S[j]) % BLOCK_LENGTH
         k = S[t]
-        yeld k
+        yield k
 
 
 
