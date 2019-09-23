@@ -75,9 +75,9 @@ def test_k2():
     assert k2 == 0b10100111
 
 
-def test_encrypt():
-    assert Sdes(0b1100011110).encrypt(0b00101000) == 0b10001010
+def test_encrypt_block():
+    assert Sdes(0b1100011110).encrypt_block(0b00101000) == 0b10001010
 
 
-def test_decrypt():
-    assert Sdes(0b1100011110).decrypt(0b10001010) == 0b00101000
+def test_decrypt_block():
+    assert Sdes(0b1100011110).decrypt_block(0b10001010) == 0b00101000

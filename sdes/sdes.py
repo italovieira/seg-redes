@@ -139,14 +139,13 @@ def fk(k):
     return lambda left, right : (left ^ F(right, k), right)
 
 
-
 class Sdes:
 
-    def __init__(self, key):
+    def __init__(self, key : int):
         self.key = key
 
 
-    def encrypt(self, plain_text):
+    def encrypt_block(self, plain_text : int):
         (k1, k2) = gen_keys(self.key)
         (left, right) = split8(ip(plain_text))
 
@@ -157,7 +156,7 @@ class Sdes:
         return inverse_ip(join8(fk2_left, fk2_right))
 
 
-    def decrypt(self, cipher_text):
+    def decrypt_block(self, cipher_text : int):
         (k1, k2) = gen_keys(self.key)
 
         (left, right) = split8(ip(cipher_text))
@@ -167,3 +166,11 @@ class Sdes:
         (fk1_left, fk1_right) = fk(k1)(fk2_right, fk2_left)
 
         return inverse_ip(join8(fk1_left, fk1_right))
+
+
+    def encrypt(self, plain_text : bytes) -> bytes:
+        return bytes([self.encrypt_block(block) for block in list(plain_text)])
+
+
+    def decrypt(self, cypher_text : bytes) -> bytes:
+        return bytes([self.decrypt_block(block) for block in list(cypher_text)])
