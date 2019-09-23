@@ -23,12 +23,12 @@ def permutation(S, T):
     return S
 
 
-def gen_stream(S, plain_text):
+def gen_stream(S):
     # Stream generating
     i = 0
     j = 0
 
-    for block in plain_text:
+    while True:
         i = (i + 1) % BLOCK_LENGTH
         j = (j + S[i]) % BLOCK_LENGTH
         S = swap(S)(i, j)
