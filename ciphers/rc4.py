@@ -28,16 +28,13 @@ def gen_stream(S, plain_text):
     i = 0
     j = 0
 
-    cypher_text = []
     for block in plain_text:
         i = (i + 1) % BLOCK_LENGTH
         j = (j + S[i]) % BLOCK_LENGTH
         S = swap(S)(i, j)
         t = (S[i] + S[j]) % BLOCK_LENGTH
         k = S[t]
-        cypher_text.append(k ^ block)
-
-    return cypher_text
+        yeld k
 
 
 
@@ -48,7 +45,7 @@ class Rc4:
 
 
     def encrypt(self, plain_text : bytes) -> bytes:
-        return bytes(gen_stream(self.S, list(plain_text)))
-
+        stream = gen_stream(self.S)
+        return bytes([x ^ stream.next() for x in list(plain_text)])
 
     decrypt = encrypt
