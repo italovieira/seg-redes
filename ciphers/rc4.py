@@ -46,6 +46,7 @@ class Rc4:
 
     def encrypt(self, plain_text : bytes) -> bytes:
         stream = gen_stream(self.S)
-        return bytes([x ^ stream.next() for x in list(plain_text)])
+        return bytes([x ^ y for x, y in zip(plain_text, stream)])
+
 
     decrypt = encrypt
