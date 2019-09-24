@@ -7,23 +7,19 @@ def swap(S):
     return step
 
 
-def initialize(key):
-    S = list(range(BLOCK_LENGTH))
+def ksa(key):
     keylen = len(key)
-    T = [key[i % keylen] for i in S]
-    return (S, T)
 
-
-def permutation(S, T):
+    S = list(range(BLOCK_LENGTH))  # [0,1,2, ... , 255]
     j = 0
     for i in range(BLOCK_LENGTH):
-        j = (j + S[i] + T[i]) % BLOCK_LENGTH
-        S = swap(S)(i, j)
+        j = (j + S[i] + key[i % keylen]) % BLOCK_LENGTH
+        S[i], S[j] = S[j], S[i]  # swap values
 
     return S
 
 
-def gen_stream(S):
+def prga(S):
     # Stream generating
     i = 0
     j = 0
@@ -31,22 +27,26 @@ def gen_stream(S):
     while True:
         i = (i + 1) % BLOCK_LENGTH
         j = (j + S[i]) % BLOCK_LENGTH
-        S = swap(S)(i, j)
-        t = (S[i] + S[j]) % BLOCK_LENGTH
-        k = S[t]
-        yield k
 
+        S[i], S[j] = S[j], S[i]  # swap values
+        K = S[(S[i] + S[j]) % BLOCK_LENGTH]
+        yield K
+
+
+def gen_keystream(key):
+    S = ksa(key)
+    return prga(S)
 
 
 class Rc4:
 
     def __init__(self, key : bytes):
-        self.S = permutation(*initialize(key))
+        self.key = key
 
 
     def encrypt(self, plain_text : bytes) -> bytes:
-        stream = gen_stream(self.S)
-        return bytes([x ^ y for x, y in zip(plain_text, stream)])
+        keystream = gen_keystream(self.key)
+        return bytes([x ^ y for x, y in zip(plain_text, keystream)])
 
 
     decrypt = encrypt
