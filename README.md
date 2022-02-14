@@ -1,9 +1,11 @@
 #### Instruções para o crypt_file.py
 
-`python3 crypt_file.py -c sdes -k <key> -e -i <inputfile> -o <outputfile>`
-`python3 crypt_file.py -c sdes -k <key> -d -i <inputfile> -o <outputfile>`
-`python3 crypt_file.py -c rc4  -k <key> -e -i <inputfile> -o <outputfile>`
-`python3 crypt_file.py -c rc4  -k <key> -d -i <inputfile> -o <outputfile>`
+```sh
+python3 crypt_file.py -c sdes -k <key> -e -i <inputfile> -o <outputfile>
+python3 crypt_file.py -c sdes -k <key> -d -i <inputfile> -o <outputfile>
+python3 crypt_file.py -c rc4  -k <key> -e -i <inputfile> -o <outputfile>
+python3 crypt_file.py -c rc4  -k <key> -d -i <inputfile> -o <outputfile>
+```
 
 
 #### Instruções para o chat
